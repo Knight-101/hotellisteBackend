@@ -56,7 +56,7 @@ exports.rateFilter = async (req, res, next) => {
 };
 
 exports.book = async (req, res) => {
-  await User.findOne({ _id: req.userId }, (err, foundUser) => {
+  await User.findOne({ email: req.userEmail }, (err, foundUser) => {
     try {
       if (foundUser) {
         const newBook = req.body;
@@ -70,15 +70,4 @@ exports.book = async (req, res) => {
       console.log(error);
     }
   });
-  //   User.updateOne(
-  //     { _id: req.userId },
-  //     { bookings: req.body.booking },
-  //     function (err) {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         res.send(req.body.booking);
-  //       }
-  //     }
-  //   );
 };

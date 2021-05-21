@@ -3,9 +3,9 @@ const verify = require("../verifyToken");
 const User = require("../models/User");
 
 router.get("/", verify, (req, res) => {
-  User.findById(req.userId)
-    .then((result) => {
-      // res.send(result)
+  User.findOne({ email: req.userEmail })
+    .then((currentUser) => {
+      res.send(currentUser);
     })
     .catch((err) => {
       console.log(err);

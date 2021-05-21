@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
   } else {
     try {
       const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-      req.userId = verified._id;
+      req.userEmail = verified.email;
 
       next();
     } catch (err) {
