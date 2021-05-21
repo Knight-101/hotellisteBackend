@@ -5,8 +5,10 @@ const controller = require('../controllers/hotel.controller');
 
 //GET all hotels
 router.get('/list', controller.get);
-
+//GET hotels by state
 router.get('/list/:state', controller.stateFilter);
+//GET hotels by ratings
+router.get('/list/rating/:rating', controller.rateFilter);
 
 // //GET a specific hotel
 // router.get('/:postId', (req, res) => {
