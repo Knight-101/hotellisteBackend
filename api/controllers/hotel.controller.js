@@ -1,4 +1,5 @@
 const Hotel = require("../models/Hotel");
+const User = require("../models/User");
 
 exports.get = async (req, res, next) => {
   try {
