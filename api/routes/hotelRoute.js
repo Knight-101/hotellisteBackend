@@ -1,25 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Post  = require('../models/Hotel');
-const controller = require('../controllers/hotel.controller');
+const User = require("../models/User");
+const Post = require("../models/Hotel");
+const controller = require("../controllers/hotel.controller");
+const verify = require("../verifyToken");
 
 //GET all hotels
-router.get('/list', controller.get);
+router.get("/list", controller.get);
 //GET hotels by state
-router.get('/list/:state', controller.stateFilter);
+router.get("/list/:state", controller.stateFilter);
 //GET hotels by ratings
-router.get('/list/rating/:rating', controller.rateFilter);
+router.get("/list/rating/:rating", controller.rateFilter);
 
-// //GET a specific hotel
-// router.get('/:postId', (req, res) => {
-//     const { postId } = req.params;
-//     Post.findById(postId)
-//     .then( data => {
-//         res.status(200).json(data);
-//     })
-//     .catch( err => {
-//         res.status(404).json({ message : err })
-//     })
-// })
+router.post("/book", verify, controller.book);
 
 module.exports = router;
