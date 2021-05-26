@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
       { name: String, location: String, checkIn: String, checkOut: String },
     ],
   },
+  wallet: {
+    type: Number,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,

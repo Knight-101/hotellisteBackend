@@ -10,7 +10,7 @@ dotenv.config();
 const saltRounds = 10;
 
 exports.postRegistrationData = async (req, res) => {
-  //lets validate the data. The joi.validate thing send error as the 1st object in its response and there is also a message in the details.
+  // validate the data. The joi.validate thing send error as the 1st object in its response and there is also a message in the details.
   const { error } = registerValidation(req.body);
   if (error) {
     return res.send(error.details[0].message);
@@ -27,6 +27,7 @@ exports.postRegistrationData = async (req, res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: hash,
+            wallet: 25000,
           });
           try {
             const savedUser = await user.save();
@@ -48,6 +49,7 @@ exports.postLoginData = async (req, res) => {
   } else {
     //check if email doesn't exist
     User.findOne({ email: req.body.email }, async (err, foundUser) => {
+      const email = req.body.email;
       if (!foundUser) {
         res.send("Email doesn't match our records");
       } else {
@@ -58,11 +60,12 @@ exports.postLoginData = async (req, res) => {
           function (err, result) {
             if (result) {
               const token = jwt.sign(
-                { _id: foundUser._id },
+                { email: email },
                 process.env.TOKEN_SECRET,
-                { expiresIn: "1hr" }
+                {
+                  expiresIn: "1hr",
+                }
               );
-              //    res.cookie('auth', token, { httpOnly: true });
               res.send(token);
             } else {
               res.send("invalid password");
@@ -91,6 +94,7 @@ exports.postOuthLogin = async (req, res, next) => {
           firstName: given_name,
           lastName: family_name,
           email: email,
+          wallet: 25000,
         }).save();
       }
       // const { email } = await oauthpipeline(req, next);
